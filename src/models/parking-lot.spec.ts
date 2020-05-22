@@ -1,9 +1,40 @@
 import { ParkingLot } from './parking-lot';
 import { CarSize, Car } from './car';
+import { ParkingLotFullError } from '../errors/parking-lot-full.error';
+import { InvalidSlotSizeError } from '../errors/invalid-slot-size.error';
+import { Ticket } from './ticket';
 
 describe('ParkingLot', () => {
+  describe('createParkingLot()', () => {
+    it('should throw InvalidSlotSizeError when number of slot is 0', () => {
+      const parkingLot = new ParkingLot();
+      expect(() => {
+        parkingLot.createParkingLot(0);
+      }).toThrowError(InvalidSlotSizeError);
+    });
+
+    it('should throw InvalidSlotSizeError when number is native', () => {
+      const parkingLot = new ParkingLot();
+      expect(() => {
+        parkingLot.createParkingLot(-10);
+      }).toThrowError(InvalidSlotSizeError);
+    });
+  });
+
   describe('issueTicket()', () => {
-    it('should throw error when parking slot is full', () => {
+    it('should return ticket when parking slot is available', () => {
+      const car = new Car('AAA-111', CarSize.SMALL);
+      const parkingLot = new ParkingLot();
+
+      parkingLot.createParkingLot(3);
+      const ticket: Ticket = parkingLot.issueTicket(car);
+
+      expect(ticket.getCarSize()).toBe(CarSize.SMALL);
+      expect(ticket.getPlateNumber()).toBe('AAA-111');
+      expect(ticket.getSlotId()).toBe(1);
+    });
+
+    it('should throw ParkingLotFullError when parking slot is full', () => {
       const car1 = new Car('ABC-111', CarSize.SMALL);
       const car2 = new Car('ABC-222', CarSize.MEDIUM);
       const car3 = new Car('ABC-333', CarSize.LARGE);
@@ -18,7 +49,7 @@ describe('ParkingLot', () => {
 
       expect(() => {
         parkingLot.issueTicket(car4);
-      }).toThrow(new Error('Parking full'));
+      }).toThrowError(ParkingLotFullError);
     });
   });
 });

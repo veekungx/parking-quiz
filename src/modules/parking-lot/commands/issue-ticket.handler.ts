@@ -2,6 +2,7 @@ import { IssueTicketCommand } from './issue-ticket.command';
 import { ICommandHandler, CommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { ParkingLot } from '../../../models/parking-lot';
 import { Ticket, TicketInfo } from 'src/models/ticket';
+import { Car } from 'src/models/car';
 
 @CommandHandler(IssueTicketCommand)
 export class IssueTicketHandler implements ICommandHandler<IssueTicketCommand> {
@@ -10,7 +11,8 @@ export class IssueTicketHandler implements ICommandHandler<IssueTicketCommand> {
     const { plateNumber, carSize } = command;
     const parkingLot = this.eventPublisher.mergeObjectContext(new ParkingLot());
 
-    const ticket: Ticket = parkingLot.issueTicket(plateNumber, carSize);
+    const car = new Car(plateNumber, carSize);
+    const ticket: Ticket = parkingLot.issueTicket(car);
     return ticket.getInfo();
   }
 }
