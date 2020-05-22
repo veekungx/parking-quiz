@@ -9,7 +9,8 @@ export class CreateParkingLotHandler
   async execute(command: CreateParkingLotCommand) {
     const { numOfSlots } = command;
 
-    const parkingLot = new ParkingLot();
+    const parkingLot = this.publisher.mergeObjectContext(new ParkingLot());
     parkingLot.createParkingLot(numOfSlots);
+    parkingLot.commit();
   }
 }

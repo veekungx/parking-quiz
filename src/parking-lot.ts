@@ -1,7 +1,9 @@
+import { AggregateRoot } from '@nestjs/cqrs';
 import PriorityQueue from 'ts-priority-queue';
 import { Car } from './car';
+import { ParkingLotCreatedEvent } from './parking-lot-created.event';
 
-export class ParkingLot {
+export class ParkingLot extends AggregateRoot {
   private slotMap: Map<number, Car> = new Map<number, Car>();
   private freeSlots = new PriorityQueue<number>({
     comparator: (a, b) => b - a,
@@ -12,5 +14,7 @@ export class ParkingLot {
       this.slotMap.set(i, null);
       this.freeSlots.queue(i);
     }
+
+    this.apply(new ParkingLotCreatedEvent());
   }
 }
