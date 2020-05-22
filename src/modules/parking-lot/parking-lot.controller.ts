@@ -15,5 +15,9 @@ export class ParkingLotController {
     return result;
   }
 
-  issueTicket(plateNumber: string, carSize: CarSize) {}
+  issueTicket(plateNumber: string, carSize: CarSize) {
+    const command = new IssueTicketCommand(plateNumber, carSize);
+    const result = this.commandBus.execute(command);
+    return result;
+  }
 }
