@@ -1,13 +1,14 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
-@Controller()
+@Controller('parking-lot')
 export class ParkingLotController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  create(numOfSlot: number) {
-    const command = new CreateParkingLotCommand(numOfSlot);
+  @Post('create')
+  create(@Body() numOfSlots: number) {
+    const command = new CreateParkingLotCommand(numOfSlots);
     const result = this.commandBus.execute(command);
     return result;
   }
