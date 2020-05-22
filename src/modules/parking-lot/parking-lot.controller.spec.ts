@@ -1,6 +1,7 @@
 import { Test } from '@nestjs/testing';
+import { CommandBus } from '@nestjs/cqrs';
+import { CarSize } from '../../../src/car';
 import { ParkingLotController } from './parking-lot.controller';
-import { CqrsModule, CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
 describe('ParkingLotController', () => {
@@ -8,12 +9,9 @@ describe('ParkingLotController', () => {
   let parkingLotController: ParkingLotController;
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [CqrsModule],
       controllers: [ParkingLotController],
-    })
-      .overrideProvider(CommandBus)
-      .useValue(mockCommandBus)
-      .compile();
+      providers: [{ provide: CommandBus, useValue: mockCommandBus }],
+    }).compile();
 
     parkingLotController = moduleRef.get<ParkingLotController>(
       ParkingLotController,
@@ -27,6 +25,13 @@ describe('ParkingLotController', () => {
       const command = new CreateParkingLotCommand(numOfSlots);
       expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
       expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
+    });
+
+    it('should return status result', async () => {
+      const response = { status: 'success' };
+      mockCommandBus.execute.mockImplementation(() => response);
+      const result = await parkingLotController.create(100);
+      expect(result).toBe(response);
     });
   });
 });
