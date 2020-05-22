@@ -1,17 +1,25 @@
-import { CommandBus } from '@nestjs/cqrs';
-import { Controller, Post, Body, HttpCode } from '@nestjs/common';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { Controller, Post, Body, HttpCode, Get } from '@nestjs/common';
 import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
 import { IssueTicketCommand } from './commands/issue-ticket.command';
 import { ReturnTicketCommand } from './commands/return-ticket.command';
-import { CarSize } from '../../models/car';
 import { TicketInfo } from '../../models/ticket';
 import { CreateParkingLotDto } from './dtos/create-parking-lot.dto';
 import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
+import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
 
 @Controller('parking-lot')
 export class ParkingLotController {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(
+    private readonly queryBus: QueryBus,
+    private readonly commandBus: CommandBus,
+  ) {}
+
+  @Get('status')
+  async status(): Promise<string> {
+    return null;
+  }
 
   @Post('create')
   async create(@Body() createParkingLotDto: CreateParkingLotDto): Promise<any> {

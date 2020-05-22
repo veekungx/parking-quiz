@@ -1,5 +1,5 @@
 import { Test } from '@nestjs/testing';
-import { CommandBus } from '@nestjs/cqrs';
+import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { CarSize } from '../../models/car';
 import { ParkingLotController } from './parking-lot.controller';
 import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
@@ -8,15 +8,20 @@ import { ReturnTicketCommand } from './commands/return-ticket.command';
 import { CreateParkingLotDto } from './dtos/create-parking-lot.dto';
 import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
+import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
 
 describe('ParkingLotController', () => {
   const mockCommandBus = { execute: jest.fn() };
+  const mockQueryBus = { execute: jest.fn() };
   let parkingLotController: ParkingLotController;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       controllers: [ParkingLotController],
-      providers: [{ provide: CommandBus, useValue: mockCommandBus }],
+      providers: [
+        { provide: CommandBus, useValue: mockCommandBus },
+        { provide: QueryBus, useValue: mockQueryBus },
+      ],
     }).compile();
 
     parkingLotController = moduleRef.get<ParkingLotController>(
@@ -24,6 +29,27 @@ describe('ParkingLotController', () => {
     );
 
     jest.clearAllMocks();
+  });
+
+  describe('status', () => {
+    it(`should execute ${ParkingLotStatusQuery.name}`, async () => {
+      await parkingLotController.status();
+      const query = new ParkingLotStatusQuery();
+      expect(mockQueryBus.execute).toHaveBeenCalled();
+      expect(mockQueryBus.execute).toHaveBeenCalledWith(query);
+    });
+
+    it('should return parking lot status', async () => {
+      const nearestSlotId = 4;
+      const availableSlot = 7;
+      const maxSlot = 100;
+      const statusReport = `Only ${availableSlot} of ${maxSlot} left, The nearest slot to the entrance is ${nearestSlotId}.`;
+
+      mockQueryBus.execute.mockImplementation(() => statusReport);
+
+      const actual = await parkingLotController.status();
+      expect(actual).toEqual(statusReport);
+    });
   });
 
   describe('create', () => {
@@ -34,7 +60,7 @@ describe('ParkingLotController', () => {
       await parkingLotController.create(dto);
 
       const command = new CreateParkingLotCommand(dto.numOfSlots);
-      expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
+      expect(mockCommandBus.execute).toHaveBeenCalled();
       expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
     });
 
@@ -59,7 +85,7 @@ describe('ParkingLotController', () => {
 
       const { plateNumber, carSize } = dto;
       const command = new IssueTicketCommand(plateNumber, carSize);
-      expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
+      expect(mockCommandBus.execute).toHaveBeenCalled();
       expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
     });
 
@@ -87,7 +113,7 @@ describe('ParkingLotController', () => {
 
       const { slotId } = dto;
       const command = new ReturnTicketCommand(slotId);
-      expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
+      expect(mockCommandBus.execute).toHaveBeenCalled();
       expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
     });
 
