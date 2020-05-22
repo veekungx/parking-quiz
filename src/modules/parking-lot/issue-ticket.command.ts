@@ -1,5 +1,8 @@
 import { CarSize } from 'src/car';
 
 export class IssueTicketCommand {
-  constructor(private plateNumber: string, private carSize: CarSize) {}
+  constructor(
+    public readonly plateNumber: string,
+    public readonly carSize: CarSize,
+  ) {}
 }
