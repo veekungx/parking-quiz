@@ -12,5 +12,7 @@ export class CreateParkingLotHandler
     const parkingLot = this.publisher.mergeObjectContext(new ParkingLot());
     parkingLot.createParkingLot(numOfSlots);
     parkingLot.commit();
+
+    return { status: 'success' };
   }
 }
