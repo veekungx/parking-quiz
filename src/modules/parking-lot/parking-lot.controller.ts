@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
@@ -6,8 +6,9 @@ import { CreateParkingLotCommand } from './create-parking-lot.command';
 export class ParkingLotController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  onApplicationBootstrap() {
-    const command = new CreateParkingLotCommand(100);
-    this.commandBus.execute(command);
+  create(numOfSlot: number) {
+    const command = new CreateParkingLotCommand(numOfSlot);
+    const result = this.commandBus.execute(command);
+    return result;
   }
 }
