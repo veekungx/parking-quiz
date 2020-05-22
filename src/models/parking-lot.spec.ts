@@ -61,7 +61,6 @@ describe('ParkingLot', () => {
       const ticket: Ticket = parkingLot.issueTicket(car);
 
       const slotId = parkingLot.returnTicket(ticket);
-
       expect(slotId).toBe(1);
     });
   });

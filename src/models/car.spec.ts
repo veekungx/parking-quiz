@@ -8,6 +8,7 @@ describe('Car', () => {
       expect(actual).toEqual('ABC-123');
     });
   });
+
   describe('Car.getCarSize()', () => {
     it('should retrive carSize', () => {
       const car = new Car('ABC-123', CarSize.LARGE);
