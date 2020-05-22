@@ -5,5 +5,13 @@ export enum CarSize {
 }
 
 export class Car {
-  constructor(private plateNumber: string, private size: CarSize) {}
+  constructor(private plateNumber: string, private carSize: CarSize) {}
+
+  getCarSize(): CarSize {
+    return this.carSize;
+  }
+
+  getPlateNumber(): string {
+    return this.plateNumber;
+  }
 }
