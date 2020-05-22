@@ -4,17 +4,15 @@ import { CqrsModule, CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
 describe('ParkingLotController', () => {
+  const mockCommandBus = { execute: jest.fn() };
   let parkingLotController: ParkingLotController;
-  const execute = jest.fn();
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [CqrsModule],
       controllers: [ParkingLotController],
     })
       .overrideProvider(CommandBus)
-      .useValue({
-        execute,
-      })
+      .useValue(mockCommandBus)
       .compile();
 
     parkingLotController = moduleRef.get<ParkingLotController>(
@@ -27,8 +25,8 @@ describe('ParkingLotController', () => {
       const numOfSlots = 100;
       await parkingLotController.create(numOfSlots);
       const command = new CreateParkingLotCommand(numOfSlots);
-      expect(execute).toHaveBeenCalledTimes(1);
-      expect(execute).toHaveBeenCalledWith(command);
+      expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
+      expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
     });
   });
 });
