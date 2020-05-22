@@ -18,7 +18,9 @@ export class ParkingLotController {
 
   @Get('status')
   async status(): Promise<string> {
-    return null;
+    const query = new ParkingLotStatusQuery();
+    const statusReport: string = await this.queryBus.execute(query);
+    return statusReport;
   }
 
   @Post('create')
