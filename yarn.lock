@@ -6727,6 +6727,11 @@ ts-node@^8.6.2:
     source-map-support "^0.5.17"
     yn "3.1.1"
 
+ts-priority-queue@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/ts-priority-queue/-/ts-priority-queue-0.1.1.tgz#557be9c76e4b86c0da3c0a17911543805a899fa6"
+  integrity sha512-jNwbk4ItfTHVopnlQ/Z7UUlbF1TNsdXS2cb1W8kI6lm8UauIjs8CYSOEh1E/yrIEhl+HVFUMp60ma6fKuvBhBQ==
+
 tsconfig-paths-webpack-plugin@3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/tsconfig-paths-webpack-plugin/-/tsconfig-paths-webpack-plugin-3.2.0.tgz#6e70bd42915ad0efb64d3385163f0c1270f3e04d"

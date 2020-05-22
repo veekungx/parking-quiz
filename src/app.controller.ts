@@ -3,7 +3,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
 @Controller()
-export default class AppController {
+export class AppController {
   constructor(private readonly commandBus: CommandBus) {}
 
   onApplicationBootstrap() {
