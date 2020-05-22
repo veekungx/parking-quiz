@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import PriorityQueue from 'ts-priority-queue';
-import { Car } from './car';
+import { Car } from '../../car';
 import { ParkingLotCreatedEvent } from './parking-lot-created.event';
 
 export class ParkingLot extends AggregateRoot {

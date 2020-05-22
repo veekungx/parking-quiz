@@ -1,9 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 
 @Controller()
-export class AppController {
+export class ParkingLotController {
   constructor(private readonly commandBus: CommandBus) {}
 
   onApplicationBootstrap() {
