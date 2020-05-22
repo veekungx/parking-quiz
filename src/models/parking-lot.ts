@@ -1,9 +1,9 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import PriorityQueue from 'ts-priority-queue';
-import { Car, CarSize } from '../../car';
-import { ParkingLotCreatedEvent } from './parking-lot-created.event';
-import { TicketIssuedEvent } from './ticket-issued.event';
-import { Ticket } from '../../ticket';
+import { Car, CarSize } from '../models/car';
+import { ParkingLotCreatedEvent } from '../modules/parking-lot/events/parking-lot-created.event';
+import { TicketIssuedEvent } from '../modules/parking-lot/events/ticket-issued.event';
+import { Ticket } from './ticket';
 
 export class ParkingLot extends AggregateRoot {
   private slotMap: Map<number, Car> = new Map<number, Car>();

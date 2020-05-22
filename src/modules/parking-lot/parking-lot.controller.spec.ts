@@ -1,9 +1,9 @@
 import { Test } from '@nestjs/testing';
 import { CommandBus } from '@nestjs/cqrs';
-import { CarSize } from '../../../src/car';
+import { CarSize } from '../../models/car';
 import { ParkingLotController } from './parking-lot.controller';
-import { CreateParkingLotCommand } from './create-parking-lot.command';
-import { IssueTicketCommand } from './issue-ticket.command';
+import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
+import { IssueTicketCommand } from './commands/issue-ticket.command';
 
 describe('ParkingLotController', () => {
   const mockCommandBus = { execute: jest.fn() };

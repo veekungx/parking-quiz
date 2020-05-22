@@ -1,7 +1,7 @@
 import { IssueTicketCommand } from './issue-ticket.command';
 import { ICommandHandler, CommandHandler, EventPublisher } from '@nestjs/cqrs';
-import { ParkingLot } from './parking-lot';
-import { Ticket, TicketInfo } from 'src/ticket';
+import { ParkingLot } from '../../../models/parking-lot';
+import { Ticket, TicketInfo } from 'src/models/ticket';
 
 @CommandHandler(IssueTicketCommand)
 export class IssueTicketHandler implements ICommandHandler<IssueTicketCommand> {

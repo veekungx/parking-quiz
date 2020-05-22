@@ -1,9 +1,9 @@
 import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { CreateParkingLotCommand } from './create-parking-lot.command';
-import { CarSize } from '../../car';
-import { IssueTicketCommand } from './issue-ticket.command';
-import { TicketInfo } from '../../ticket';
+import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
+import { CarSize } from '../../models/car';
+import { IssueTicketCommand } from './commands/issue-ticket.command';
+import { TicketInfo } from '../../models/ticket';
 
 @Controller('parking-lot')
 export class ParkingLotController {

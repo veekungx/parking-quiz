@@ -3,8 +3,8 @@ import { Test } from '@nestjs/testing';
 import { CqrsModule, CommandBus } from '@nestjs/cqrs';
 import { INestApplication } from '@nestjs/common';
 import { ParkingLotModule } from '../src/modules/parking-lot/parking-lot.module';
-import { CarSize } from '../src/car';
-import { Ticket } from '../src/ticket';
+import { CarSize } from '../src/models/car';
+import { Ticket } from '../src/models/ticket';
 
 describe('ParkingLot', () => {
   let app: INestApplication;

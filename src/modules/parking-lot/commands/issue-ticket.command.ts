@@ -1,4 +1,4 @@
-import { CarSize } from 'src/car';
+import { CarSize } from '../../../models/car';
 
 export class IssueTicketCommand {
   constructor(
