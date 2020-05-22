@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
 import { CarSize } from '../../car';
@@ -16,6 +16,8 @@ export class ParkingLotController {
     return result;
   }
 
+  @Post('issue-ticket')
+  @HttpCode(200)
   async issueTicket(
     plateNumber: string,
     carSize: CarSize,
