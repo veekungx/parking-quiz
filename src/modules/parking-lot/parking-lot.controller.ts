@@ -4,6 +4,7 @@ import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
 import { CarSize } from '../../models/car';
 import { IssueTicketCommand } from './commands/issue-ticket.command';
 import { TicketInfo } from '../../models/ticket';
+import { ReturnTicketCommand } from './commands/return-ticket.command';
 
 @Controller('parking-lot')
 export class ParkingLotController {
@@ -30,6 +31,8 @@ export class ParkingLotController {
   @Post('return-ticket')
   @HttpCode(200)
   async returnTicket(slotId: number): Promise<any> {
-    return null;
+    const command = new ReturnTicketCommand(slotId);
+    const ticketInfo: TicketInfo = await this.commandBus.execute(command);
+    return ticketInfo;
   }
 }
