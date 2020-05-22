@@ -4,6 +4,7 @@ import { CarSize } from '../../models/car';
 import { ParkingLotController } from './parking-lot.controller';
 import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
 import { IssueTicketCommand } from './commands/issue-ticket.command';
+import { ReturnTicketCommand } from './commands/return-ticket.command';
 
 describe('ParkingLotController', () => {
   const mockCommandBus = { execute: jest.fn() };
@@ -67,6 +68,29 @@ describe('ParkingLotController', () => {
         plateNumber,
         carSize,
       );
+
+      expect(result).toBe(response);
+    });
+  });
+
+  describe('returnTicket', () => {
+    it(`should execute ${ReturnTicketCommand.name}`, async () => {
+      const slotId = 3;
+
+      const command = new ReturnTicketCommand(slotId);
+
+      await parkingLotController.returnTicket(slotId);
+
+      expect(mockCommandBus.execute).toHaveBeenCalledTimes(1);
+      expect(mockCommandBus.execute).toHaveBeenCalledWith(command);
+    });
+
+    it('should return status', async () => {
+      const slotId = 3;
+      const response = { status: 'success' };
+      mockCommandBus.execute.mockImplementation(() => response);
+
+      const result = await parkingLotController.returnTicket(slotId);
 
       expect(result).toBe(response);
     });

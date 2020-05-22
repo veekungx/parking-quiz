@@ -26,4 +26,10 @@ export class ParkingLotController {
     const ticketInfo: TicketInfo = await this.commandBus.execute(command);
     return ticketInfo;
   }
+
+  @Post('return-ticket')
+  @HttpCode(200)
+  async returnTicket(slotId: number): Promise<any> {
+    return null;
+  }
 }
