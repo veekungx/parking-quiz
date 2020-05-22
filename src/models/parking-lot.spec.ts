@@ -13,7 +13,7 @@ describe('ParkingLot', () => {
       }).toThrowError(InvalidSlotSizeError);
     });
 
-    it('should throw InvalidSlotSizeError when number is native', () => {
+    it('should throw InvalidSlotSizeError when number is negative', () => {
       const parkingLot = new ParkingLot();
       expect(() => {
         parkingLot.createParkingLot(-10);
