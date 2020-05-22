@@ -13,7 +13,7 @@ export class ParkingLot extends AggregateRoot {
     comparator: (a, b) => a - b,
   });
 
-  public createParkingLot(numOfSlots: number): void {
+  createParkingLot(numOfSlots: number): void {
     if (numOfSlots <= 0) {
       throw new InvalidSlotSizeError();
     }
@@ -26,7 +26,7 @@ export class ParkingLot extends AggregateRoot {
     this.apply(new ParkingLotCreatedEvent());
   }
 
-  public issueTicket(car: Car): Ticket {
+  issueTicket(car: Car): Ticket {
     let ticket;
     const slotId = this.getAvailableSlot();
 
@@ -39,6 +39,12 @@ export class ParkingLot extends AggregateRoot {
     this.apply(new TicketIssuedEvent());
 
     return ticket;
+  }
+
+  returnTicket(ticket: Ticket): number {
+    const slotId = ticket.getSlotId();
+    this.freeSlots.queue(slotId);
+    return slotId;
   }
 
   private getAvailableSlot(): number {

@@ -22,7 +22,7 @@ describe('ParkingLot', () => {
   });
 
   describe('issueTicket()', () => {
-    it('should return ticket when parking slot is available', () => {
+    it('should give a ticket when parking slot is available', () => {
       const car = new Car('AAA-111', CarSize.SMALL);
       const parkingLot = new ParkingLot();
 
@@ -50,6 +50,19 @@ describe('ParkingLot', () => {
       expect(() => {
         parkingLot.issueTicket(car4);
       }).toThrowError(ParkingLotFullError);
+    });
+  });
+
+  describe('returnTicket()', () => {
+    it('should give slotId when success', () => {
+      const parkingLot = new ParkingLot();
+      const car = new Car('ABC-111', CarSize.MEDIUM);
+      parkingLot.createParkingLot(3);
+      const ticket: Ticket = parkingLot.issueTicket(car);
+
+      const slotId = parkingLot.returnTicket(ticket);
+
+      expect(slotId).toBe(1);
     });
   });
 });
