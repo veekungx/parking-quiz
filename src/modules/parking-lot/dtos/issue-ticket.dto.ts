@@ -2,9 +2,12 @@ import { CarSize } from '../../../models/car';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class IssueTicketDto {
-  @ApiProperty()
+  @ApiProperty({ required: true })
   plateNumber: string;
 
-  @ApiProperty({ enum: ['SMALL', 'MEDIUM', 'LARGE'] })
+  @ApiProperty({
+    required: true,
+    enum: ['SMALL', 'MEDIUM', 'LARGE'],
+  })
   carSize: CarSize;
 }

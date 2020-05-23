@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ReturnTicketDto {
-  @ApiProperty()
+  @ApiProperty({ required: true })
   slotId: number;
 }
