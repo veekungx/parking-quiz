@@ -9,6 +9,8 @@ import { CreateParkingLotDto } from './dtos/create-parking-lot.dto';
 import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
 import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
+import { PlateNumberByCarSizeQuery } from './queries/plate-number-by-car-size.query';
+import { GetPlateNumbersByCarSizeDto } from './dtos/get-plate-numbers-by-car-size.dto';
 
 describe('ParkingLotController', () => {
   const mockCommandBus = { execute: jest.fn() };
@@ -49,6 +51,30 @@ describe('ParkingLotController', () => {
 
       const actual = await parkingLotController.status();
       expect(actual).toEqual(statusReport);
+    });
+  });
+
+  describe('getPlateNumbersByCarSize', () => {
+    it(`should execute ${PlateNumberByCarSizeQuery.name}`, async () => {
+      const dto = new GetPlateNumbersByCarSizeDto();
+      dto.carSize = CarSize.MEDIUM;
+      await parkingLotController.getPlateNumbers(dto);
+
+      const query = new PlateNumberByCarSizeQuery(dto.carSize);
+      expect(mockQueryBus.execute).toHaveBeenCalled();
+      expect(mockQueryBus.execute).toHaveBeenCalledWith(query);
+    });
+
+    it('should return list of plate numbers', async () => {
+      const plateNumbers = ['ABC-111', 'ABC-222'];
+      const dto = new GetPlateNumbersByCarSizeDto();
+      dto.carSize = CarSize.MEDIUM;
+
+      mockQueryBus.execute.mockImplementation(() => plateNumbers);
+
+      const actual = await parkingLotController.getPlateNumbers(dto);
+
+      expect(actual).toEqual(actual);
     });
   });
 

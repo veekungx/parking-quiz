@@ -8,6 +8,8 @@ import { CreateParkingLotDto } from './dtos/create-parking-lot.dto';
 import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
 import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
+import { PlateNumberByCarSizeQuery } from './queries/plate-number-by-car-size.query';
+import { GetPlateNumbersByCarSizeDto } from './dtos/get-plate-numbers-by-car-size.dto';
 
 @Controller('parking-lot')
 export class ParkingLotController {
@@ -21,6 +23,16 @@ export class ParkingLotController {
     const query = new ParkingLotStatusQuery();
     const statusReport: string = await this.queryBus.execute(query);
     return statusReport;
+  }
+
+  @Get('plate-numbers')
+  async getPlateNumbers(
+    @Body() getPlateNumbersByCarSizeDto: GetPlateNumbersByCarSizeDto,
+  ): Promise<string[]> {
+    const { carSize } = getPlateNumbersByCarSizeDto;
+    const query = new PlateNumberByCarSizeQuery(carSize);
+    const plateNumbers: string[] = await this.queryBus.execute(query);
+    return plateNumbers;
   }
 
   @Post('create')
