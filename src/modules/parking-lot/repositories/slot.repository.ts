@@ -7,10 +7,7 @@ export class SlotRespository {
   private slotByCarSizeMap = new Map();
   private carSlotMap = new Map();
 
-  async initState(numOfSlots: number) {
-    for (let i = 1; i <= numOfSlots; i++) {
-      this.carSlotMap.set(i, null);
-    }
+  constructor() {
     this.slotByCarSizeMap.set(CarSize.SMALL, []);
     this.slotByCarSizeMap.set(CarSize.MEDIUM, []);
     this.slotByCarSizeMap.set(CarSize.LARGE, []);
@@ -18,6 +15,12 @@ export class SlotRespository {
     this.plateNumberByCarSizeMap.set(CarSize.SMALL, []);
     this.plateNumberByCarSizeMap.set(CarSize.MEDIUM, []);
     this.plateNumberByCarSizeMap.set(CarSize.LARGE, []);
+  }
+
+  async initState(numOfSlots: number) {
+    for (let i = 1; i <= numOfSlots; i++) {
+      this.carSlotMap.set(i, null);
+    }
   }
 
   async addCarToSlot(slotId: number, car: Car): Promise<void> {
