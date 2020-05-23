@@ -23,7 +23,7 @@ export class ParkingLot extends AggregateRoot {
       this.freeSlots.queue(i);
     }
 
-    this.apply(new ParkingLotCreatedEvent());
+    this.apply(new ParkingLotCreatedEvent(numOfSlots));
   }
 
   issueTicket(car: Car): Ticket {

@@ -12,7 +12,14 @@ describe.skip('SlotRepository', () => {
     slotRepository = moduleRef.get<SlotRespository>(SlotRespository);
   });
 
-  describe('addCarToSlot', () => {
+  describe('initState()', () => {
+    it('should initialize state ', async () => {
+      const numOfSlots = 100;
+      await slotRepository.initState(numOfSlots);
+    });
+  });
+
+  describe('addCarToSlot()', () => {
     it('should store car to specific slot', async () => {
       const slotId = 1;
       const car = new Car('ABC-111', CarSize.MEDIUM);
@@ -20,27 +27,27 @@ describe.skip('SlotRepository', () => {
     });
   });
 
-  describe('removeCarFromSlot', () => {
+  describe('removeCarFromSlot()', () => {
     it('should remove car from specific slot', async () => {
       const slotId = 1;
       await slotRepository.removeCarFromSlot(slotId);
     });
   });
 
-  describe('addPlateNumberByCarsize', () => {
+  describe('addPlateNumberByCarsize()', () => {
     it('should store plate number info by car size', async () => {
       await slotRepository.addPlateNumberByCarSize(CarSize.MEDIUM, 'ABC-123');
     });
   });
 
-  describe('getPlateNumberByCarSize', () => {
+  describe('getPlateNumberByCarSize()', () => {
     it('should retrieve all plate number by car size', async () => {
       await slotRepository.getPlateNumberByCarSize(CarSize.MEDIUM);
       // expect().toEqual();
     });
   });
 
-  describe('getAllocatedSlotByCarSize', () => {
+  describe('getAllocatedSlotByCarSize()', () => {
     it('should retrieve all slot number by car size', async () => {
       await slotRepository.getAllocatedSlotByCarSize(CarSize.MEDIUM);
     });
