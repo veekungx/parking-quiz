@@ -34,12 +34,6 @@ describe.skip('SlotRepository', () => {
     });
   });
 
-  describe('addPlateNumberByCarsize()', () => {
-    it('should store plate number info by car size', async () => {
-      await slotRepository.addPlateNumberByCarSize(CarSize.MEDIUM, 'ABC-123');
-    });
-  });
-
   describe('getPlateNumberByCarSize()', () => {
     it('should retrieve all plate number by car size', async () => {
       await slotRepository.getPlateNumberByCarSize(CarSize.MEDIUM);

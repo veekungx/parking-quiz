@@ -22,13 +22,23 @@ export class SlotRespository {
 
   async addCarToSlot(slotId: number, car: Car): Promise<void> {
     this.carSlotMap.set(slotId, car);
+    this.addPlateNumberByCarSize(car.getCarSize(), car.getPlateNumber());
+    this.addSlotByCarSize(car.getCarSize(), slotId);
   }
 
   async removeCarFromSlot(slotId: number): Promise<void> {
     this.carSlotMap.set(slotId, null);
   }
 
-  async addPlateNumberByCarSize(
+  async getPlateNumberByCarSize(carSize: CarSize): Promise<string[]> {
+    return this.plateNumberByCarSizeMap.get(carSize);
+  }
+
+  async getAllocatedSlotByCarSize(carSize: CarSize): Promise<number[]> {
+    return this.slotByCarSizeMap.get(carSize);
+  }
+
+  private async addPlateNumberByCarSize(
     carSize: CarSize,
     plateNumber: string,
   ): Promise<void> {
@@ -38,18 +48,13 @@ export class SlotRespository {
       : this.plateNumberByCarSizeMap.set(carSize, [plateNumber]);
   }
 
-  async addSlotByCarSize(carSize: CarSize, slotId: number): Promise<void> {
+  private async addSlotByCarSize(
+    carSize: CarSize,
+    slotId: number,
+  ): Promise<void> {
     const sc = this.slotByCarSizeMap.get(carSize);
     sc
       ? this.slotByCarSizeMap.set(carSize, [...sc, slotId])
       : this.slotByCarSizeMap.set(carSize, [slotId]);
-  }
-
-  async getPlateNumberByCarSize(carSize: CarSize): Promise<string[]> {
-    return this.plateNumberByCarSizeMap.get(carSize);
-  }
-
-  async getAllocatedSlotByCarSize(carSize: CarSize): Promise<number[]> {
-    return this.slotByCarSizeMap.get(carSize);
   }
 }
