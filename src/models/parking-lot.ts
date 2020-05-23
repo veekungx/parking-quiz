@@ -36,8 +36,13 @@ export class ParkingLot extends AggregateRoot {
       throw new ParkingLotFullError();
     }
 
-    this.apply(new TicketIssuedEvent());
-
+    this.apply(
+      new TicketIssuedEvent(
+        ticket.getPlateNumber(),
+        ticket.getCarSize(),
+        ticket.getSlotId(),
+      ),
+    );
     return ticket;
   }
 
