@@ -16,6 +16,7 @@ export class ReturnTicketHandler
     );
 
     const freedSlotId = parkingLot.returnTicket(slotId);
+    parkingLot.commit();
     return { slotId: freedSlotId };
   }
 }

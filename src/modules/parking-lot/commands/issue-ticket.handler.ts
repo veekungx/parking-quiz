@@ -18,6 +18,7 @@ export class IssueTicketHandler implements ICommandHandler<IssueTicketCommand> {
 
     const car = new Car(plateNumber, carSize);
     const ticket: Ticket = parkingLot.issueTicket(car);
+    parkingLot.commit();
     return ticket.getInfo();
   }
 }
