@@ -2,6 +2,7 @@ import { Test } from '@nestjs/testing';
 import { CreateParkingLotHandler } from './create-parking-lot.handler';
 import { CqrsModule, EventPublisher } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
+import { ParkingLotRepository } from '../repositories/parking-lot.repository';
 
 describe('CreateParkingLotHandler', () => {
   let handler: CreateParkingLotHandler;
@@ -9,7 +10,11 @@ describe('CreateParkingLotHandler', () => {
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [CqrsModule],
-      providers: [CreateParkingLotHandler, EventPublisher],
+      providers: [
+        EventPublisher,
+        CreateParkingLotHandler,
+        ParkingLotRepository,
+      ],
     }).compile();
     handler = moduleRef.get<CreateParkingLotHandler>(CreateParkingLotHandler);
   });
