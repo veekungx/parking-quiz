@@ -1,6 +1,5 @@
 import { CommandHandler, ICommandHandler, EventPublisher } from '@nestjs/cqrs';
 import { CreateParkingLotCommand } from './create-parking-lot.command';
-import { ParkingLot } from '../../../models/parking-lot';
 import { ParkingLotRepository } from '../repositories/parking-lot.repository';
 
 @CommandHandler(CreateParkingLotCommand)

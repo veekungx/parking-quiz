@@ -1,6 +1,5 @@
 import { IssueTicketCommand } from './issue-ticket.command';
 import { ICommandHandler, CommandHandler, EventPublisher } from '@nestjs/cqrs';
-import { ParkingLot } from '../../../models/parking-lot';
 import { Ticket, TicketInfo } from '../../../models/ticket';
 import { Car } from '../../../models/car';
 import { ParkingLotRepository } from '../repositories/parking-lot.repository';
