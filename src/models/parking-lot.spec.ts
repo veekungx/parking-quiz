@@ -60,8 +60,8 @@ describe('ParkingLot', () => {
       parkingLot.createParkingLot(3);
       const ticket: Ticket = parkingLot.issueTicket(car);
 
-      const slotId = parkingLot.returnTicket(ticket);
-      expect(slotId).toBe(1);
+      const freedSlotId = parkingLot.returnTicket(ticket.getSlotId());
+      expect(freedSlotId).toBe(1);
     });
   });
 });

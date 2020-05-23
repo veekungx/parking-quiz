@@ -47,7 +47,7 @@ export class ParkingLotController {
   async returnTicket(@Body() returnTicketDto: ReturnTicketDto): Promise<any> {
     const { slotId } = returnTicketDto;
     const command = new ReturnTicketCommand(slotId);
-    const ticketInfo: TicketInfo = await this.commandBus.execute(command);
-    return ticketInfo;
+    const freedSlotId = await this.commandBus.execute(command);
+    return freedSlotId;
   }
 }

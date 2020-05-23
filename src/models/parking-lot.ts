@@ -41,8 +41,7 @@ export class ParkingLot extends AggregateRoot {
     return ticket;
   }
 
-  returnTicket(ticket: Ticket): number {
-    const slotId = ticket.getSlotId();
+  returnTicket(slotId: number): number {
     this.freeSlots.queue(slotId);
     return slotId;
   }
