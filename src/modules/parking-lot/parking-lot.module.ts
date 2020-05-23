@@ -1,20 +1,13 @@
 import { Module } from '@nestjs/common';
 import { ParkingLotController } from './parking-lot.controller';
-import { CreateParkingLotHandler } from './commands/create-parking-lot.handler';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ParkingLotRepository } from './repositories/parking-lot.repository';
-import { IssueTicketHandler } from './commands/issue-ticket.handler';
-import { ReturnTicketHandler } from './commands/return-ticket.handler';
-
-const commandHandlers = [
-  CreateParkingLotHandler,
-  IssueTicketHandler,
-  ReturnTicketHandler,
-];
+import { CommandHandlers } from './commands';
+import { EventHandlers } from './events';
 
 @Module({
   imports: [CqrsModule],
   controllers: [ParkingLotController],
-  providers: [ParkingLotRepository, ...commandHandlers],
+  providers: [ParkingLotRepository, ...CommandHandlers, ...EventHandlers],
 })
 export class ParkingLotModule {}
