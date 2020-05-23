@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ParkingLotController } from './parking-lot.controller';
 import { CqrsModule } from '@nestjs/cqrs';
 import { ParkingLotRepository } from './repositories/parking-lot.repository';
-import { CommandHandlers } from './commands';
-import { EventHandlers } from './events';
+import { ParkingLotCommandHandlers } from './commands';
+import { ParkingLotEventHandlers } from './events';
 import { SlotRespository } from './repositories/slot.repository';
-import { QueryHandlers } from './queries';
+import { ParkingLotQueryHandlers } from './queries';
 
 @Module({
   imports: [CqrsModule],
@@ -13,9 +13,9 @@ import { QueryHandlers } from './queries';
   providers: [
     ParkingLotRepository,
     SlotRespository,
-    ...CommandHandlers,
-    ...EventHandlers,
-    ...QueryHandlers,
+    ...ParkingLotCommandHandlers,
+    ...ParkingLotEventHandlers,
+    ...ParkingLotQueryHandlers,
   ],
 })
 export class ParkingLotModule {}

@@ -1,3 +1,3 @@
 import { TicketIssuedHandler } from './ticket-issued.handler';
 
-export const EventHandlers = [TicketIssuedHandler];
+export const ParkingLotEventHandlers = [TicketIssuedHandler];
