@@ -30,7 +30,11 @@ export class SlotRespository {
   }
 
   async removeCarFromSlot(slotId: number): Promise<void> {
+    const car: Car = this.carSlotMap.get(slotId);
     this.carSlotMap.set(slotId, null);
+
+    this.removePlateNumberByCarSize(car.getCarSize(), car.getPlateNumber());
+    this.removeSlotByCarSize(car.getCarSize(), slotId);
   }
 
   async getPlateNumberByCarSize(carSize: CarSize): Promise<string[]> {
@@ -49,6 +53,25 @@ export class SlotRespository {
     pc
       ? this.plateNumberByCarSizeMap.set(carSize, [...pc, plateNumber])
       : this.plateNumberByCarSizeMap.set(carSize, [plateNumber]);
+  }
+
+  private async removePlateNumberByCarSize(
+    carSize: CarSize,
+    plateNumber: string,
+  ) {
+    const pc = this.plateNumberByCarSizeMap.get(carSize);
+    this.plateNumberByCarSizeMap.set(
+      carSize,
+      pc.filter(item => item !== plateNumber),
+    );
+  }
+
+  private async removeSlotByCarSize(carSize: CarSize, slotId: number) {
+    const sc = this.slotByCarSizeMap.get(carSize);
+    this.slotByCarSizeMap.set(
+      carSize,
+      sc.filter(item => item !== slotId),
+    );
   }
 
   private async addSlotByCarSize(
