@@ -1,15 +1,17 @@
+import { ApiQuery } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { Controller, Post, Body, HttpCode, Get } from '@nestjs/common';
+import { Controller, Post, Body, HttpCode, Get, Query } from '@nestjs/common';
 import { CreateParkingLotCommand } from './commands/create-parking-lot.command';
 import { IssueTicketCommand } from './commands/issue-ticket.command';
 import { ReturnTicketCommand } from './commands/return-ticket.command';
-import { TicketInfo } from '../../models/ticket';
 import { CreateParkingLotDto } from './dtos/create-parking-lot.dto';
 import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
 import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
 import { PlateNumberByCarSizeQuery } from './queries/plate-number-by-car-size.query';
-import { GetPlateNumbersByCarSizeDto } from './dtos/get-plate-numbers-by-car-size.dto';
+import { TicketInfo } from '../../models/ticket';
+import { CarSize } from '../../models/car';
+import { AllocatedSlotByCarSizeQuery } from './queries/allocated-slot-by-car-size.query';
 
 @Controller('parking-lot')
 export class ParkingLotController {
@@ -25,14 +27,24 @@ export class ParkingLotController {
     return statusReport;
   }
 
+  @ApiQuery({ name: 'car-size', enum: CarSize })
   @Get('plate-numbers')
-  async getPlateNumbers(
-    @Body() getPlateNumbersByCarSizeDto: GetPlateNumbersByCarSizeDto,
+  async getPlateNumbersByCarSize(
+    @Query('car-size') carSize: CarSize,
   ): Promise<string[]> {
-    const { carSize } = getPlateNumbersByCarSizeDto;
     const query = new PlateNumberByCarSizeQuery(carSize);
     const plateNumbers: string[] = await this.queryBus.execute(query);
     return plateNumbers;
+  }
+
+  @ApiQuery({ name: 'car-size', enum: CarSize })
+  @Get('allocated-slot')
+  async getAllocatedSlotsByCarSize(
+    @Query('car-size') carSize: CarSize,
+  ): Promise<number[]> {
+    const query = new AllocatedSlotByCarSizeQuery(carSize);
+    const allocatedSlots: number[] = await this.queryBus.execute(query);
+    return allocatedSlots;
   }
 
   @Post('create')

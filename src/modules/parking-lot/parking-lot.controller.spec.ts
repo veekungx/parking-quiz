@@ -10,7 +10,7 @@ import { IssueTicketDto } from './dtos/issue-ticket.dto';
 import { ReturnTicketDto } from './dtos/return-ticket.dto';
 import { ParkingLotStatusQuery } from './queries/parking-lot-status.query';
 import { PlateNumberByCarSizeQuery } from './queries/plate-number-by-car-size.query';
-import { GetPlateNumbersByCarSizeDto } from './dtos/get-plate-numbers-by-car-size.dto';
+import { AllocatedSlotByCarSizeQuery } from './queries/allocated-slot-by-car-size.query';
 
 describe('ParkingLotController', () => {
   const mockCommandBus = { execute: jest.fn() };
@@ -56,25 +56,41 @@ describe('ParkingLotController', () => {
 
   describe('getPlateNumbersByCarSize', () => {
     it(`should execute ${PlateNumberByCarSizeQuery.name}`, async () => {
-      const dto = new GetPlateNumbersByCarSizeDto();
-      dto.carSize = CarSize.MEDIUM;
-      await parkingLotController.getPlateNumbers(dto);
-
-      const query = new PlateNumberByCarSizeQuery(dto.carSize);
+      await parkingLotController.getPlateNumbersByCarSize(CarSize.MEDIUM);
+      const query = new PlateNumberByCarSizeQuery(CarSize.MEDIUM);
       expect(mockQueryBus.execute).toHaveBeenCalled();
       expect(mockQueryBus.execute).toHaveBeenCalledWith(query);
     });
 
     it('should return list of plate numbers', async () => {
       const plateNumbers = ['ABC-111', 'ABC-222'];
-      const dto = new GetPlateNumbersByCarSizeDto();
-      dto.carSize = CarSize.MEDIUM;
 
       mockQueryBus.execute.mockImplementation(() => plateNumbers);
+      const actual = await parkingLotController.getPlateNumbersByCarSize(
+        CarSize.MEDIUM,
+      );
 
-      const actual = await parkingLotController.getPlateNumbers(dto);
+      expect(actual).toEqual(plateNumbers);
+    });
+  });
 
-      expect(actual).toEqual(actual);
+  describe('getAllocatedSlotsByCarSize', () => {
+    it(`should execute ${AllocatedSlotByCarSizeQuery.name}`, async () => {
+      await parkingLotController.getAllocatedSlotsByCarSize(CarSize.MEDIUM);
+      const query = new AllocatedSlotByCarSizeQuery(CarSize.MEDIUM);
+      expect(mockQueryBus.execute).toHaveBeenCalled();
+      expect(mockQueryBus.execute).toHaveBeenCalledWith(query);
+    });
+
+    it('should return list of plate numbers', async () => {
+      const allocatedSlots = [3, 4, 7, 8];
+
+      mockQueryBus.execute.mockImplementation(() => allocatedSlots);
+      const actual = await parkingLotController.getAllocatedSlotsByCarSize(
+        CarSize.MEDIUM,
+      );
+
+      expect(actual).toEqual(allocatedSlots);
     });
   });
 
