@@ -9,7 +9,7 @@ Design API and Maintain the state of the parking lot systems. The car info has o
 - [X] It should provide us with api to create parking lot
 - [X] It should provide us with api to park the car
 - [X] It should provide us with api to leave the slot
-- [-] It should provide us with api to get status of parking lot
+- [ ] It should provide us with api to get status of parking lot
 - [X] It should provide us with api to get registration plate number list by car size
 - [X] It should provide us with api to get registration allocated slot number list by car size
 ## Installation
