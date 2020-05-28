@@ -8,7 +8,12 @@ import { ParkingLotFullError } from '../errors/parking-lot-full.error';
 import { InvalidSlotSizeError } from '../errors/invalid-slot-size.error';
 
 export class ParkingLot extends AggregateRoot {
-  private slotMap: Map<number, Car> = new Map<number, Car>();
+  private _slotMap: Map<number, Car> = new Map<number, Car>();
+
+  get slotMap(): Map<number, Car> {
+    return this._slotMap;
+  }
+
   private freeSlots = new PriorityQueue<number>({
     comparator: (a, b) => a - b,
   });
@@ -19,7 +24,7 @@ export class ParkingLot extends AggregateRoot {
     }
 
     for (let i = 1; i <= numOfSlots; i++) {
-      this.slotMap.set(i, null);
+      this._slotMap.set(i, null);
       this.freeSlots.queue(i);
     }
 
