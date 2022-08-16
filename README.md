@@ -1,4 +1,6 @@
 # Parking Lot Quiz
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fveekungx%2Fparking-quiz.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fveekungx%2Fparking-quiz?ref=badge_shield)
+
 
 ## Problem Statement
 I own a parking lot that can hold up to ‘n’ cars at any given point in time. I want to create an automated ticketing system that allows my customers to use my parking lot without human intervention.
@@ -34,3 +36,5 @@ localhost:3000/api
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fveekungx%2Fparking-quiz.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fveekungx%2Fparking-quiz?ref=badge_large)
