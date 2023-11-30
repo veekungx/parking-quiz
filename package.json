@@ -29,7 +29,7 @@
     "@nestjs/swagger": "^4.5.7",
     "mongoose": "^5.9.15",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^3.0.2",
+    "rimraf": "^4.0.0",
     "rxjs": "^6.5.4",
     "swagger-ui-express": "^4.1.4",
     "ts-priority-queue": "^0.1.1"
