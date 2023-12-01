@@ -10,7 +10,7 @@ RUN npm test
 FROM test as build
 RUN npm run build
 
-FROM node:alpine
+FROM node:21.2-alpine3.18
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app
 COPY --from=build /usr/src/app/dist/ /usr/src/app/dist/
